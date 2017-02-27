@@ -2,12 +2,12 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-require ("/var/www/html/jewelleryshop/Entities/ProductEntity.php");
+require ("./Entities/ProductEntity.php");
 ;
 //Contains database related code for the Coffee page.
 class ProductModel {
 
-    //Get all coffee types from the database and return them in an array.
+    //Get all product types from the database and return them in an array.
     function GetProductTypes() {
         require 'config.php';
 
@@ -48,6 +48,7 @@ class ProductModel {
        $productArray = array();
         
         while ($row = mysqli_fetch_array($result,MYSQLI_NUM)) {
+            $id = $row[0];
             $product_code = $row[1];
             $product_name = $row[2];
             $product_type = $row[3];
@@ -56,7 +57,7 @@ class ProductModel {
             $price = $row[6];
 
             //Create coffee objects and store them in an array.
-            $product = new ProductEntity(-1, $product_code, $product_name, $product_type, $product_desc, $product_img_name, $price);
+            $product = new ProductEntity($id, $product_code, $product_name, $product_type, $product_desc, $product_img_name, $price);
             array_push($productArray, $product);
         }
         //Close connection and return result
@@ -132,8 +133,7 @@ class ProductModel {
        die("Connection failed: " . mysqli_connect_error());
     }
         $query = sprintf("UPDATE products
-                            SET product_
-                            code = '%s', product_name = '%s', product_type = '%s', product_desc = '%s', product_img_name = '%s', price = '%s'
+                            SET product_code = '%s', product_name = '%s', product_type = '%s', product_desc = '%s', product_img_name = '%s', price = '%s'
                           WHERE id = $id",
                 mysqli_real_escape_string($conn,$product->product_code),
                 mysqli_real_escape_string($conn,$product->product_name),
@@ -148,7 +148,7 @@ class ProductModel {
         
   }
 
-  function DeleteCoffee($id) {
+  function DeleteProduct($id) {
         require 'config.php';
         // Create connection
        $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -158,7 +158,7 @@ class ProductModel {
     }
 
         $query = "DELETE FROM products WHERE id = $id";
-        mysqli_query($conn);
+        mysqli_query($conn,$query);
         mysqli_close($conn);
         
     }

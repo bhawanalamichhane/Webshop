@@ -1,12 +1,59 @@
+<script>
+//Display a confirmation box when trying to delete an object
+function showConfirm(id)
+{
+    // build the confirmation box
+    var c = confirm("Are you sure you wish to delete this item?");
+    
+    // if true, delete item and refresh
+    if(c)
+        window.location = "ProductOverview.php?delete=" + id;
+}
+</script>
+
 <?php
 
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-require ("/var/www/html/jewelleryshop/Model/ProductModel.php");
+require ("./Model/ProductModel.php");
 
 //Contains non-database related function for the Product page
 class ProductController {
+
+    function CreateOverviewTable() {
+        $result = "
+            <table class='overViewTable'>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><b>id</b></td>
+                    <td><b>Code</b></td>
+                    <td><b>Name</b></td>
+                    <td><b>Type</b></td>
+                    <td><b>Details</b></td>
+                    <td><b>Price</b></td>
+                </tr>";
+
+        $productArray = $this->GetProductByType('%');
+
+        foreach ($productArray as $key => $value) {
+            $result = $result .
+                    "<tr>
+                        <td><a href='ProductAdd.php?update=$value->id'>Update</a></td>
+                        <td><a href='#' onclick='showConfirm($value->id)'>Delete</a></td>
+                        <td>$value->id</td>
+                        <td>$value->product_code</td>
+                        <td>$value->product_name</td>    
+                        <td>$value->product_type</td> 
+                        <td>$value->product_desc</td>
+                        <td>$value->price</td>   
+                    </tr>";
+        }
+
+        $result = $result . "</table>";
+        return $result;
+    }
 
     function CreateProductDropdownList() {
         $productModel = new ProductModel();
@@ -120,10 +167,23 @@ class ProductController {
     }
 
     function UpdateProduct($id) {
+        $product_code = $_POST["txtcode"];
+        $product_name = $_POST["txtname"];
+        $product_type = $_POST["ddlType"];
+        $product_desc = $_POST["txtdetails"];
+        $price = $_POST["txtprice"];
+        $product_img_name = $_POST["ddlImage"];
+        
+
+        $product = new ProductEntity($id, $product_code, $product_name, $product_type, $product_desc, $product_img_name, $price);
+        $productModel = new ProductModel();
+        $productModel->UpdateProduct($id, $product);
         
     }
 
     function DeleteProduct($id) {
+        $productModel = new ProductModel();
+        $productModel->DeleteProduct($id);
         
     }
     //</editor-fold>

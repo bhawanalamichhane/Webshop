@@ -2,7 +2,7 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-require '/var/www/html/jewelleryshop/Controller/ProductController.php';
+require './Controller/ProductController.php';
 $productController = new ProductController();
 
 if(isset($_POST['types']))

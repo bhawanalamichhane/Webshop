@@ -1,5 +1,5 @@
 <?php
-require '/var/www/html/jewelleryshop/Controller/ProductController.php';
+require './Controller/ProductController.php';
 $productController = new ProductController();
 
 $title = "Add a new jewellery";
