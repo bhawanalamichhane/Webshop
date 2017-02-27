@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 require ("./Entities/ProductEntity.php");
 ;
-//Contains database related code for the Coffee page.
+//Contains database related code for the Product page.
 class ProductModel {
 
     //Get all product types from the database and return them in an array.

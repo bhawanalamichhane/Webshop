@@ -1,5 +1,9 @@
 <?php
-
+session_start();
+if(!isset($_SESSION["user"])) {
+header("Location: adminlogin.php");
+exit();
+}
 $title = "Upload new image";
 
 $content = '<form action="" method="post" enctype="multipart/form-data">

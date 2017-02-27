@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION["user"])) {
+header("Location: adminlogin.php");
+exit();
+}
 require './Controller/ProductController.php';
 $productController = new ProductController();
 
