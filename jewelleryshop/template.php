@@ -15,7 +15,7 @@
                 <ul id="nav">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="Product.php">Jewellery</a></li>
-                    <li><a href="#">Shop</a></li>
+                    <li><a href="login.php">Shop</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="Management.php">Management</a></li>
                 </ul>
